@@ -8,7 +8,7 @@ Express applications often serve static files from the public directory.
 
 
 const mongoose = require('mongoose');
-const uri = "mongodb+srv://soumensamanta721150:admin123@cluster0.qztdnrx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const uri = "MongoDbURI/?retryWrites=true&w=majority&appName=Cluster0";
 
 const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
 
