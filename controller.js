@@ -1,6 +1,9 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
+// Load environment variables
+dotenv.config();
 
 const users = [] // for storing user data temporarily 
 
@@ -12,7 +15,7 @@ export const userLogin = async (req, res)=>{
         
         if (user && await bcrypt.compare(password, user.hashedPassword)) {
             req.session.user = user; // Store user in session if using session management
-            const token = jwt.sign({ username: user.username }, 'your_jwt_secret', { expiresIn: '1h' }); // Generate JWT token
+            const token = jwt.sign({ username: user.username }, process.env.JWT_SECRET || 'your_jwt_secret', { expiresIn: '1h' }); // Generate JWT token
             res.json({ message: "Login successful", user, token }); // Include token in response
         } else {
             res.status(401).json({ message: "Invalid credentials" });

@@ -2,6 +2,10 @@ import express from 'express';
 import { userLogin, userRegister } from './controller.js';
 import { decode } from 'jsonwebtoken';
 import jwt from 'jsonwebtoken'; // Import jwt for token handling
+import dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config();
 
 const router = express.Router();
 
@@ -20,7 +24,7 @@ router.get('/dashboard', (req, res) => {
         const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : authHeader;
         console.log("Token:", token);
         
-        const decodedToken = jwt.verify(token, "your_jwt_secret");  // Decode the token to get user info
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET || "your_jwt_secret");  // Decode the token to get user info
         console.log("Decoded token:", decodedToken);
         
         if (decodedToken) {

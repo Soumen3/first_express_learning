@@ -1,4 +1,5 @@
 import express from 'express';
+import dotenv from 'dotenv';
 import {  userLogin, userRegister } from './controller.js';
 import router from './route.js';
 import multer from 'multer';
@@ -9,6 +10,8 @@ import { Person } from './models/Person.js';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 
+// Load environment variables
+dotenv.config();
 
 const app = express();
 
@@ -25,8 +28,7 @@ const upload = multer({
 const PORT = process.env.PORT || 3000;
 app.use(cookieParser()); // Middleware to parse cookies
 app.use(session({
-    secret
-    : 'your-secret-key', // Replace with your secret key
+    secret: process.env.SESSION_SECRET || 'your-secret-key', // Use environment variable
     resave: false,
     saveUninitialized: true,
 })); // Middleware to handle sessions
